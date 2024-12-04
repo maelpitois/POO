@@ -14,36 +14,42 @@ Grille::Grille() : lignes(0), colonnes(0) {}
 bool Grille::chargerDepuisFichier(const std::string& nomFichier) {
     std::ifstream fichier(nomFichier);
     if (!fichier.is_open()) {
-        std::cerr << "Impossible d'ouvrir le fichier : " << nomFichier << std::endl;
+        std::cerr << "Erreur : Impossible d'ouvrir le fichier " << nomFichier << std::endl;
         return false;
     }
 
-    // Lire les dimensions de la grille depuis la première ligne
+    // Lire les dimensions
     if (!(fichier >> lignes >> colonnes)) {
-        std::cerr << "Erreur lors de la lecture des dimensions de la grille." << std::endl;
+        std::cerr << "Erreur : Format invalide dans le fichier, dimensions non lisibles." << std::endl;
         return false;
     }
 
-    // Initialiser la grille avec les dimensions lues
+    // Redimensionner la grille
     cellules.resize(lignes, std::vector<Cellule>(colonnes));
 
-    // Lire l'état des cellules
+    // Lire les cellules ligne par ligne
     for (int i = 0; i < lignes; ++i) {
         for (int j = 0; j < colonnes; ++j) {
             int etat;
             if (!(fichier >> etat)) {
-                std::cerr << "Erreur lors de la lecture de l'état de la cellule (" << i << ", " << j << ")." << std::endl;
+                std::cerr << "Erreur : Lecture invalide à la cellule (" << i << ", " << j << ")." << std::endl;
                 return false;
             }
-            if (etat != 0 && etat != 1) {
-                std::cerr << "État de cellule invalide (" << etat << ") à la position (" << i << ", " << j << ")." << std::endl;
+            if (etat < 0 || etat > 3) {
+                std::cerr << "Erreur : État de cellule invalide (" << etat << ") à la position (" << i << ", " << j << ")." << std::endl;
                 return false;
             }
-            cellules[i][j].definirEtat(etat == 1);
+
+            // Créer la cellule selon l'état
+            bool vivant = (etat == 1 || etat == 3);
+            bool obstacle = (etat == 2 || etat == 3);
+            cellules[i][j] = Cellule(vivant, obstacle);
         }
     }
+
     return true;
 }
+
 
 bool Grille::sauvegarderDansFichier(const std::string& dossier, int iteration) const {
     // Créer le dossier si nécessaire
@@ -54,6 +60,7 @@ bool Grille::sauvegarderDansFichier(const std::string& dossier, int iteration) c
     }
 #else
     if (mkdir(dossier.c_str(), 0777) != 0 && errno != EEXIST) {
+         // std::cerr "caractere error =  Pour print pour une erreur"
         std::cerr << "Erreur lors de la création du dossier " << dossier << ": " << strerror(errno) << std::endl;
         return false;
     }
@@ -113,27 +120,34 @@ int Grille::compterVoisinsVivants(int x, int y) const {
 bool Grille::mettreAJour() {
     bool aChange = false;
 
-    for (int y = 0; y < obtenirHauteur(); ++y) {
-        for (int x = 0; x < obtenirLargeur(); ++x) {
+    // Calculer les prochains états pour chaque cellule
+    for (int y = 0; y < lignes; ++y) {
+        for (int x = 0; x < colonnes; ++x) {
+            if (cellules[y][x].estObstacle()) {
+                continue; // Ignorer les cellules obstacles
+            }
+
             int voisinsVivants = compterVoisinsVivants(x, y);
             bool prochainEtat = (cellules[y][x].estVivante() && (voisinsVivants == 2 || voisinsVivants == 3)) ||
                                 (!cellules[y][x].estVivante() && voisinsVivants == 3);
 
             if (cellules[y][x].estVivante() != prochainEtat) {
-                aChange = true;
+                aChange = true; // Au moins une cellule a changé
             }
             cellules[y][x].definirProchainEtat(prochainEtat);
         }
     }
 
-    for (int y = 0; y < obtenirHauteur(); ++y) {
-        for (int x = 0; x < obtenirLargeur(); ++x) {
+    // Appliquer les états calculés
+    for (int y = 0; y < lignes; ++y) {
+        for (int x = 0; x < colonnes; ++x) {
             cellules[y][x].appliquerProchainEtat();
         }
     }
 
     return aChange;
 }
+
 
 void Grille::dessiner(sf::RenderWindow& fenetre) const {
     float tailleCellule = 20.0f; // Taille des cellules à l'écran
@@ -142,10 +156,10 @@ void Grille::dessiner(sf::RenderWindow& fenetre) const {
     for (int y = 0; y < lignes; ++y) {
         for (int x = 0; x < colonnes; ++x) {
             rectangle.setPosition(x * tailleCellule, y * tailleCellule);
-            if (cellules[y][x].estVivante()) {
-                rectangle.setFillColor(sf::Color::Green);
+            if (cellules[y][x].estObstacle()) {
+                rectangle.setFillColor(cellules[y][x].estVivante() ? sf::Color::Red : sf::Color(200, 200, 200)//Couleur Gris clair );
             } else {
-                rectangle.setFillColor(sf::Color(200, 200, 200)); // Gris clair pour les cellules mortes
+                rectangle.setFillColor(cellules[y][x].estVivante() ? sf::Color::White : sf::Color(0, 0, 0)) //Couleur Noir;
             }
             fenetre.draw(rectangle);
         }
