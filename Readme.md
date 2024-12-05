@@ -150,12 +150,12 @@ Boucles simplifiées pour les mises à jour et l'affichage.
 À Propos des Couleurs :
 
 - Console :
-"#" : Cellule vivante normale.
-"." : Cellule morte normale.
-"X" : Cellule obstacle vivante.
-"O" : Cellule obstacle morte.
+    - "#" : Cellule vivante normale.
+    - "." : Cellule morte normale.
+    - "X" : Cellule obstacle vivante.
+    - "O" : Cellule obstacle morte.
 - Graphique : 
-Blanc : Cellule vivante normale.
-Noir : Cellule morte normale.
-Rouge : Cellule obstacle vivante.
-Gris foncé : Cellule obstacle morte.
+    - Blanc : Cellule vivante normale.
+    - Noir : Cellule morte normale.
+    - Rouge : Cellule obstacle vivante.
+    - Gris foncé : Cellule obstacle morte.
