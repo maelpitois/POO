@@ -97,28 +97,29 @@ Ce fichier permet d'éxecuter le programme.
 
 ### Compilation et Exécution :
 1. Compilation
-Utilisez g++ pour compiler les fichiers :
+  - Utilisez g++ pour compiler les fichiers :
 
-g++ -o jeu_de_la_vie main.cpp Jeu.cpp Grille.cpp Cellule.cpp -lsfml-graphics -lsfml-window -lsfml-system
+    - g++ -o jeu_de_la_vie main.cpp Jeu.cpp Grille.cpp Cellule.cpp -lsfml-graphics -lsfml-window -lsfml-system
 
-ou utiliser un makefile
+  - ou utiliser un makefile
 
 2. Exécution
-Lancez le programme en ligne de commande :
+  - Lancez le programme en ligne de commande :
 
-./jeu_de_la_vie
+    - ./jeu_de_la_vie
 
 ### Explications des Modes : 
 - Mode Console :
-L'utilisateur fournit un fichier d'entrée.
-Le programme affiche les états successifs de la grille dans la console.
-Chaque itération est sauvegardée dans un fichier texte dans un dossier <nom_du_fichier_dentree>_out.
+  - L'utilisateur fournit un fichier d'entrée.
+  - Le programme affiche les états successifs de la grille dans la console.
+  - Chaque itération est sauvegardée dans un fichier texte dans un dossier <nom_du_fichier_dentree>_out.
 
 - Mode Graphique :
-L'utilisateur fournit un fichier d'entrée.
-Le programme affiche une fenêtre graphique représentant la grille.
-L'évolution de la grille est animée avec un délai ajustable entre chaque itération.
-Exemple de Sortie : 
+  - L'utilisateur fournit un fichier d'entrée.
+  - Le programme affiche une fenêtre graphique représentant la grille.
+  - L'évolution de la grille est animée avec un délai ajustable entre chaque itération.
+
+### Exemple de Sortie : 
 
 - Mode Console :
 
@@ -132,26 +133,21 @@ Exemple de Sortie :
 
 
 - Mode Graphique : 
-Une fenêtre s'ouvre avec des couleurs :
-Vert : cellules vivantes normales.
-Gris clair : cellules mortes normales.
-Rouge : obstacles vivants.
-Gris foncé : obstacles morts.
-Optimisations Implémentées
+  - Une fenêtre s'ouvre avec des couleurs :
+    - Vert : cellules vivantes normales.
+    - Noir : cellules mortes normales.
+    - Rouge : obstacles vivants.
+    - Gris foncé : obstacles morts.
 
-- Élimination des redondances :
-
-    - La méthode positionValide centralise la validation des coordonnées dans la grille.
-    - Les cellules obstacles sont gérées sans logique supplémentaire dans les boucles.
+### Optimisations Implémentées
 
 - Prévention des fuites mémoire :
 
-- Utilisation de conteneurs STL (std::vector) pour une gestion automatique de la mémoire.
+  - Utilisation de conteneurs STL (std::vector) pour une gestion automatique de la mémoire.
 
-- Lisibilité et efficacité :
+  - Lisibilité et efficacité :
 
-    - Division des responsabilités entre les classes Cellule, Grille et Jeu.
-    - Boucles simplifiées pour les mises à jour et l'affichage.
+    - Division des responsabilités en plusieurs fichiers .h et .cpp entre les classes Cellule, Grille et Jeu.
 
 ### À Propos des Couleurs :
 
