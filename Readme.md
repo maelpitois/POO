@@ -121,11 +121,8 @@ Exemple de Sortie :
 - Mode Console :
 
 Itération 0 :
-    .#XO.
-    .X..X
-    ..O..
-    X..O.
-    .....
+![{41BE7ED0-621C-4409-B093-2AF69909F68B}](https://github.com/user-attachments/assets/2cdae6cb-af85-4e6c-b34b-b3139b382de4)
+
 
 Itération 1 :
     .....
