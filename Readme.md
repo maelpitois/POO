@@ -121,18 +121,18 @@ Exemple de Sortie :
 - Mode Console :
 
 Itération 0 :
-.#XO.
-.X..X
-..O..
-X..O.
-.....
+    .#XO.
+    .X..X
+    ..O..
+    X..O.
+    .....
 
 Itération 1 :
-.....
-.#XO.
-..O..
-.X..X
-.....
+    .....
+    .#XO.
+    ..O..
+    .X..X
+    .....
 
 - Mode Graphique : 
 Une fenêtre s'ouvre avec des couleurs :
