@@ -43,7 +43,7 @@ Ces fichiers définissent une cellule du jeu de la vie.
   - prochainEtat : État futur calculé.
   - obstacle : Si la cellule est un obstacle.
 
--Fonctionnalités :
+- Fonctionnalités :
  - Définir et appliquer les états.
  - Identifier les cellules vivantes et obstacles.
 
