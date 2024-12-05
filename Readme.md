@@ -6,9 +6,10 @@ Ce projet implémente le célèbre jeu de la vie de John Conway en C++ avec deux
 
 - Mode graphique : affiche la grille et son évolution dans une fenêtre graphique à l'aide de la bibliothèque SFML.
 
-Fonctionnalités principales : 
+### Fonctionnalités principales : 
 
 - Lecture d'une grille initiale depuis un fichier d'entrée.
+  
 - Évolution de la grille selon les règles du jeu de la vie :
     - Une cellule vivante reste vivante si elle a 2 ou 3 voisins vivants.
     - Une cellule morte devient vivante si elle a exactement 3 voisins vivants.
@@ -31,8 +32,9 @@ Installation sur Ubuntu :
 
 sudo apt-get install libsfml-dev
 
-Structure des fichiers : 
-1. Cellule.h et Cellule.cpp
+## Structure des fichiers : 
+
+### 1. Cellule.h et Cellule.cpp
 Ces fichiers définissent une cellule du jeu de la vie.
 
 Propriétés :
@@ -43,7 +45,7 @@ Fonctionnalités :
 Définir et appliquer les états.
 Identifier les cellules vivantes et obstacles.
 
-2. Grille.h et Grille.cpp
+### 2. Grille.h et Grille.cpp
 Ces fichiers définissent une grille rectangulaire contenant les cellules.
 
 Propriétés :
@@ -57,7 +59,7 @@ Mettre à jour les états des cellules.
 Compter les voisins vivants d'une cellule.
 Dessiner la grille dans la console ou dans une fenêtre graphique.
 
-3. Jeu.h et Jeu.cpp
+### 3. Jeu.h et Jeu.cpp
 Ces fichiers définissent le jeu de la vie lui-même.
 
 Propriétés :
@@ -67,7 +69,7 @@ Fonctionnalités :
 Mode console : affiche les grilles dans la console et les sauvegarde.
 Mode graphique : affiche les grilles dans une fenêtre animée.
 
-4. main.cpp
+### 4. main.cpp
 Le point d'entrée du programme.
 
 Permet à l'utilisateur de :
@@ -93,7 +95,7 @@ Exemple :
 3 0 1 0 0
 0 0 0 1 3
 
-Compilation et Exécution
+### Compilation et Exécution :
 1. Compilation
 Utilisez g++ pour compiler les fichiers :
 
@@ -106,7 +108,7 @@ Lancez le programme en ligne de commande :
 
 ./jeu_de_la_vie
 
-Explications des Modes : 
+### Explications des Modes : 
 - Mode Console :
 L'utilisateur fournit un fichier d'entrée.
 Le programme affiche les états successifs de la grille dans la console.
@@ -136,18 +138,22 @@ Gris clair : cellules mortes normales.
 Rouge : obstacles vivants.
 Gris foncé : obstacles morts.
 Optimisations Implémentées
-Élimination des redondances :
 
-La méthode positionValide centralise la validation des coordonnées dans la grille.
-Les cellules obstacles sont gérées sans logique supplémentaire dans les boucles.
-Prévention des fuites mémoire :
+- Élimination des redondances :
 
-Utilisation de conteneurs STL (std::vector) pour une gestion automatique de la mémoire.
-Lisibilité et efficacité :
+    - La méthode positionValide centralise la validation des coordonnées dans la grille.
+    - Les cellules obstacles sont gérées sans logique supplémentaire dans les boucles.
 
-Division des responsabilités entre les classes Cellule, Grille et Jeu.
-Boucles simplifiées pour les mises à jour et l'affichage.
-À Propos des Couleurs :
+- Prévention des fuites mémoire :
+
+- Utilisation de conteneurs STL (std::vector) pour une gestion automatique de la mémoire.
+
+- Lisibilité et efficacité :
+
+    - Division des responsabilités entre les classes Cellule, Grille et Jeu.
+    - Boucles simplifiées pour les mises à jour et l'affichage.
+
+### À Propos des Couleurs :
 
 - Console :
     - "#" : Cellule vivante normale.
