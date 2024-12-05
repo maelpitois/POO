@@ -18,82 +18,82 @@ Ce projet implémente le célèbre jeu de la vie de John Conway en C++ avec deux
     - Les cellules marquées comme obstacles ne changent jamais d'état.
     - Les obstacles peuvent être vivants ou morts.
 
-Deux modes d'exécution :
- - Console : Affiche la grille dans la console, sauvegarde chaque état dans des fichiers.
- - Graphique : Affiche la grille dans une fenêtre avec des animations.
+- Deux modes d'exécution :
+   - Console : Affiche la grille dans la console, sauvegarde chaque état dans des fichiers.
+   - Graphique : Affiche la grille dans une fenêtre avec des animations.
 
-Prérequis :
-Logiciels nécessaires :
-Un compilateur compatible C++17 (g++ recommandé).
+### Prérequis :
+- Logiciels nécessaires :
+  - Un compilateur compatible C++17 (g++ recommandé).
 
-La bibliothèque SFML pour l'affichage graphique.
+- La bibliothèque SFML pour l'affichage graphique.
 
-Installation sur Ubuntu :
+### Installation sur Ubuntu :
 
-sudo apt-get install libsfml-dev
+- sudo apt-get install libsfml-dev
 
 ## Structure des fichiers : 
 
 ### 1. Cellule.h et Cellule.cpp
+
 Ces fichiers définissent une cellule du jeu de la vie.
 
-Propriétés :
-vivante : État actuel de la cellule.
-prochainEtat : État futur calculé.
-obstacle : Si la cellule est un obstacle.
-Fonctionnalités :
-Définir et appliquer les états.
-Identifier les cellules vivantes et obstacles.
+- Propriétés :
+  - vivante : État actuel de la cellule.
+  - prochainEtat : État futur calculé.
+  - obstacle : Si la cellule est un obstacle.
+
+-Fonctionnalités :
+ - Définir et appliquer les états.
+ - Identifier les cellules vivantes et obstacles.
 
 ### 2. Grille.h et Grille.cpp
 Ces fichiers définissent une grille rectangulaire contenant les cellules.
 
-Propriétés :
-lignes : Nombre de lignes de la grille.
-colonnes : Nombre de colonnes.
-cellules : Matrice de cellules.
-Fonctionnalités :
-Charger une grille depuis un fichier.
-Sauvegarder une grille dans un fichier.
-Mettre à jour les états des cellules.
-Compter les voisins vivants d'une cellule.
-Dessiner la grille dans la console ou dans une fenêtre graphique.
+- Propriétés :
+  - lignes : Nombre de lignes de la grille.
+  - colonnes : Nombre de colonnes.
+  - cellules : Matrice de cellules.
+
+- Fonctionnalités :
+  - Charger une grille depuis un fichier.
+  - Sauvegarder une grille dans un fichier.
+  - Mettre à jour les états des cellules.
+  - Compter les voisins vivants d'une cellule.
+  - Dessiner la grille dans la console ou dans une fenêtre graphique.
 
 ### 3. Jeu.h et Jeu.cpp
 Ces fichiers définissent le jeu de la vie lui-même.
 
-Propriétés :
-Une instance de Grille.
-Un délai (en millisecondes) pour le mode graphique.
-Fonctionnalités :
-Mode console : affiche les grilles dans la console et les sauvegarde.
-Mode graphique : affiche les grilles dans une fenêtre animée.
+- Propriétés :
+  - Une instance de Grille.
+  - Un délai (en millisecondes) pour le mode graphique.
+
+- Fonctionnalités :
+  - Mode console : affiche les grilles dans la console et les sauvegarde.
+  - Mode graphique : affiche les grilles dans une fenêtre animée.
 
 ### 4. main.cpp
-Le point d'entrée du programme.
+Ce fichier permet d'éxecuter le programme.
 
-Permet à l'utilisateur de :
-Fournir un fichier d'entrée contenant la grille initiale.
-Choisir entre le mode console et le mode graphique.
-Définir un délai pour le mode graphique.
-Structure d'un fichier d'entrée
-Le fichier d'entrée contient la grille initiale.
+- Permet à l'utilisateur de :
+  - Fournir un fichier d'entrée contenant la grille initiale.
+  - Choisir entre le mode console et le mode graphique.
+  - Définir un délai pour le mode graphique.
+- Structure d'un fichier d'entrée :
+  - Le fichier d'entrée contient la grille initiale.
 
-Première ligne : dimensions de la grille (lignes et colonnes).
-Les lignes suivantes : les états des cellules.
-0 : Cellule morte.
-1 : Cellule vivante.
-2 : Cellule obstacle morte.
-3 : Cellule obstacle vivante.
+  - Première ligne : dimensions de la grille (lignes et colonnes).
+  - Les lignes suivantes : les états des cellules : 
+      - 0 : Cellule morte.
+      - 1 : Cellule vivante.
+      - 2 : Cellule obstacle morte.
+      - 3 : Cellule obstacle vivante.
 
-Exemple :
+### Exemple :
 
-5 5
-0 1 2 0 3
-1 0 0 1 0
-0 2 1 2 0
-3 0 1 0 0
-0 0 0 1 3
+![{5C44B8D1-9CE7-4BE9-9520-EF830CB9D1CE}](https://github.com/user-attachments/assets/73da93e5-530e-4cd0-987f-5f935e90cc5e)
+
 
 ### Compilation et Exécution :
 1. Compilation
