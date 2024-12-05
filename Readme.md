@@ -1,4 +1,4 @@
-Jeu de la Vie
+# Jeu de la Vie
 
 Ce projet implémente le célèbre jeu de la vie de John Conway en C++ avec deux modes :
 
