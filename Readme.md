@@ -121,15 +121,13 @@ Exemple de Sortie :
 - Mode Console :
 
 ### Itération 0 :
-![{41BE7ED0-621C-4409-B093-2AF69909F68B}](https://github.com/user-attachments/assets/2cdae6cb-af85-4e6c-b34b-b3139b382de4)
+![{BFF2DE68-8328-4562-930A-7FC53554727D}](https://github.com/user-attachments/assets/9ec4884e-983d-4013-a197-844f41f8e1fb)
 
 
-Itération 1 :
-    .....
-    .#XO.
-    ..O..
-    .X..X
-    .....
+
+### Itération 1 :
+![{542BEBE7-8E3C-42B3-9E8B-352E13C32A51}](https://github.com/user-attachments/assets/80216391-cbc0-4cee-a633-dc32c6c2ac76)
+
 
 - Mode Graphique : 
 Une fenêtre s'ouvre avec des couleurs :
@@ -156,7 +154,7 @@ Boucles simplifiées pour les mises à jour et l'affichage.
 "." : Cellule morte normale.
 "X" : Cellule obstacle vivante.
 "O" : Cellule obstacle morte.
-Graphique
+- Graphique : 
 Blanc : Cellule vivante normale.
 Noir : Cellule morte normale.
 Rouge : Cellule obstacle vivante.
