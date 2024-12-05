@@ -101,7 +101,8 @@ Ce fichier permet d'éxecuter le programme.
 
     - g++ -o jeu_de_la_vie main.cpp Jeu.cpp Grille.cpp Cellule.cpp -lsfml-graphics -lsfml-window -lsfml-system
 
-  - ou utiliser un makefile
+  - Ou utiliser un makefile pour compiler :
+      - make
 
 2. Exécution
   - Lancez le programme en ligne de commande :
