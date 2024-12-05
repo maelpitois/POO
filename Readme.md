@@ -1,32 +1,37 @@
 Jeu de la Vie
+
 Ce projet implémente le célèbre jeu de la vie de John Conway en C++ avec deux modes :
 
-Mode console : affiche les états successifs de la grille dans la console et les sauvegarde dans des fichiers.
-Mode graphique : affiche la grille et son évolution dans une fenêtre graphique à l'aide de la bibliothèque SFML.
-Fonctionnalités principales
-Lecture d'une grille initiale depuis un fichier d'entrée.
-Évolution de la grille selon les règles du jeu de la vie :
-Une cellule vivante reste vivante si elle a 2 ou 3 voisins vivants.
-Une cellule morte devient vivante si elle a exactement 3 voisins vivants.
-Gestion des cellules obstacles :
-Les cellules marquées comme obstacles ne changent jamais d'état.
-Les obstacles peuvent être vivants ou morts.
+- Mode console : affiche les états successifs de la grille dans la console et les sauvegarde dans des fichiers.
+
+- Mode graphique : affiche la grille et son évolution dans une fenêtre graphique à l'aide de la bibliothèque SFML.
+
+Fonctionnalités principales : 
+
+- Lecture d'une grille initiale depuis un fichier d'entrée.
+- Évolution de la grille selon les règles du jeu de la vie :
+    - Une cellule vivante reste vivante si elle a 2 ou 3 voisins vivants.
+    - Une cellule morte devient vivante si elle a exactement 3 voisins vivants.
+
+- Gestion des cellules obstacles :
+    - Les cellules marquées comme obstacles ne changent jamais d'état.
+    - Les obstacles peuvent être vivants ou morts.
+
 Deux modes d'exécution :
-Console : Affiche la grille dans la console, sauvegarde chaque état dans des fichiers.
-Graphique : Affiche la grille dans une fenêtre avec des animations.
-Prérequis
+ - Console : Affiche la grille dans la console, sauvegarde chaque état dans des fichiers.
+ - Graphique : Affiche la grille dans une fenêtre avec des animations.
+
+Prérequis :
 Logiciels nécessaires :
 Un compilateur compatible C++17 (g++ recommandé).
 
 La bibliothèque SFML pour l'affichage graphique.
 
 Installation sur Ubuntu :
-bash
-Copier le code
-sudo apt-get install libsfml-dev
-CMake (optionnel pour gestion de projet complexe).
 
-Structure des fichiers
+sudo apt-get install libsfml-dev
+
+Structure des fichiers : 
 1. Cellule.h et Cellule.cpp
 Ces fichiers définissent une cellule du jeu de la vie.
 
@@ -37,6 +42,7 @@ obstacle : Si la cellule est un obstacle.
 Fonctionnalités :
 Définir et appliquer les états.
 Identifier les cellules vivantes et obstacles.
+
 2. Grille.h et Grille.cpp
 Ces fichiers définissent une grille rectangulaire contenant les cellules.
 
@@ -50,6 +56,7 @@ Sauvegarder une grille dans un fichier.
 Mettre à jour les états des cellules.
 Compter les voisins vivants d'une cellule.
 Dessiner la grille dans la console ou dans une fenêtre graphique.
+
 3. Jeu.h et Jeu.cpp
 Ces fichiers définissent le jeu de la vie lui-même.
 
@@ -59,6 +66,7 @@ Un délai (en millisecondes) pour le mode graphique.
 Fonctionnalités :
 Mode console : affiche les grilles dans la console et les sauvegarde.
 Mode graphique : affiche les grilles dans une fenêtre animée.
+
 4. main.cpp
 Le point d'entrée du programme.
 
@@ -75,40 +83,43 @@ Les lignes suivantes : les états des cellules.
 1 : Cellule vivante.
 2 : Cellule obstacle morte.
 3 : Cellule obstacle vivante.
+
 Exemple :
-Copier le code
+
 5 5
 0 1 2 0 3
 1 0 0 1 0
 0 2 1 2 0
 3 0 1 0 0
 0 0 0 1 3
+
 Compilation et Exécution
 1. Compilation
 Utilisez g++ pour compiler les fichiers :
 
-bash
-Copier le code
-g++ -o jeu main.cpp Jeu.cpp Grille.cpp Cellule.cpp -lsfml-graphics -lsfml-window -lsfml-system
+g++ -o jeu_de_la_vie main.cpp Jeu.cpp Grille.cpp Cellule.cpp -lsfml-graphics -lsfml-window -lsfml-system
+
+ou utiliser un makefile
+
 2. Exécution
 Lancez le programme en ligne de commande :
 
-bash
-Copier le code
-./jeu
-Explications des Modes
-Mode Console
+./jeu_de_la_vie
+
+Explications des Modes : 
+- Mode Console :
 L'utilisateur fournit un fichier d'entrée.
 Le programme affiche les états successifs de la grille dans la console.
 Chaque itération est sauvegardée dans un fichier texte dans un dossier <nom_du_fichier_dentree>_out.
-Mode Graphique
+
+- Mode Graphique :
 L'utilisateur fournit un fichier d'entrée.
 Le programme affiche une fenêtre graphique représentant la grille.
 L'évolution de la grille est animée avec un délai ajustable entre chaque itération.
-Exemple de Sortie
-Mode Console
-text
-Copier le code
+Exemple de Sortie : 
+
+- Mode Console :
+
 Itération 0 :
 .#XO.
 .X..X
@@ -122,7 +133,8 @@ Itération 1 :
 ..O..
 .X..X
 .....
-Mode Graphique
+
+- Mode Graphique : 
 Une fenêtre s'ouvre avec des couleurs :
 Vert : cellules vivantes normales.
 Gris clair : cellules mortes normales.
@@ -140,14 +152,15 @@ Lisibilité et efficacité :
 
 Division des responsabilités entre les classes Cellule, Grille et Jeu.
 Boucles simplifiées pour les mises à jour et l'affichage.
-À Propos des Couleurs
-Console
-# : Cellule vivante normale.
-. : Cellule morte normale.
-X : Cellule obstacle vivante.
-O : Cellule obstacle morte.
+À Propos des Couleurs :
+
+- Console :
+"#" : Cellule vivante normale.
+"." : Cellule morte normale.
+"X" : Cellule obstacle vivante.
+"O" : Cellule obstacle morte.
 Graphique
-Vert : Cellule vivante normale.
-Gris clair : Cellule morte normale.
+Blanc : Cellule vivante normale.
+Noir : Cellule morte normale.
 Rouge : Cellule obstacle vivante.
 Gris foncé : Cellule obstacle morte.
