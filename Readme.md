@@ -1,5 +1,7 @@
 # Jeu de la Vie
 
+#### https://github.com/maelpitois/POO
+
 Ce projet implémente le célèbre jeu de la vie de John Conway en C++ avec deux modes :
 
 - Mode console : affiche les états successifs de la grille dans la console et les sauvegarde dans des fichiers.
