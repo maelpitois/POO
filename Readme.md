@@ -237,7 +237,7 @@ Rôle : Représente une grille rectangulaire composée de cellules et gère l'é
 
 #### Méthodes : 
  - void afficherGraphique(sf::RenderWindow& fenetre)  :
-    - Dessine la grille dans une fenêtre graphique à l'aide de rectangles colorés.
+    - Affiche la grille dans une fenêtre graphique à l'aide de rectangles colorés.
 - void afficherConsole() const :
     - Affiche la grille dans la console avec des symboles (#, ., X, O).
 
@@ -253,16 +253,16 @@ Rôle : Permet l'exécution du jeu en mode console ou graphique.
 #### Méthodes :
   - Controleur(const std::string& fichierEntree, int delaiMs) :
     - Initialise le jeu en chargeant la grille depuis un fichier.
-  - void executerModeConsole() :
+  - void lancerModeConsole() :
     - Affiche les grilles successives dans la console.
     - Sauvegarde chaque état dans des fichiers.
     - Arrête l'exécution si l'automate se stabilise.
-  - void executerModeGraphique() :
+  - void lancerModeGraphique() :
     - Ouvre une fenêtre graphique pour afficher l'évolution de la grille.
     - Permet une animation fluide avec un délai contrôlé.
 
 #### Interactions :
-- La classe Jeu utilise la classe Grille pour manipuler les cellules et gère l'interface utilisateur (console ou graphique).
+- La classe Controleur utilise la classe Grille et Vue pour manipuler les cellules et gère l'interface utilisateur (console ou graphique).
 
 ### 2.5 main.cpp
 Rôle : Interagit avec l'utilisateur pour configurer et lancer le jeu.
