@@ -1,7 +1,6 @@
-#### https://github.com/maelpitois/POO
 # Jeu de la Vie
 
-
+#### https://github.com/maelpitois/POO
 
 Ce projet implémente le célèbre jeu de la vie de John Conway en C++ avec deux modes :
 
@@ -246,6 +245,7 @@ Rôle : Représente une grille rectangulaire composée de cellules et gère l'é
 Rôle : Permet l'exécution du jeu en mode console ou graphique.
 
 #### Propriétés :
+  - vue : instance de la classe Vue.
   - grille : Instance de la classe Grille.
   - delaiMs : Délai entre les itérations en mode graphique (en millisecondes).
   - fichierEntree : Chemin du fichier contenant la grille initiale.
@@ -265,14 +265,14 @@ Rôle : Permet l'exécution du jeu en mode console ou graphique.
 - La classe Jeu utilise la classe Grille pour manipuler les cellules et gère l'interface utilisateur (console ou graphique).
 
 ### 2.5 main.cpp
-Rôle : Point d'entrée du programme. Interagit avec l'utilisateur pour configurer et lancer le jeu.
+Rôle : Interagit avec l'utilisateur pour configurer et lancer le jeu.
 
 #### Fonctionnement :
   - Demande à l'utilisateur de fournir le chemin du fichier d'entrée.
   - Permet de choisir entre le mode console et le mode graphique.
-  - Initialise une instance de Jeu avec les paramètres fournis.
+  - Initialise une instance de Controleur avec les paramètres fournis.
   - Lance le mode correspondant (console ou graphique).
 
 #### Interactions :
-- Crée une instance de Jeu et délègue le contrôle à cette instance.
+- Crée une instance de Controleur et délègue le contrôle à cette instance.
 
