@@ -5,9 +5,6 @@
 #include <sys/stat.h> // Pour mkdir
 #include <sys/types.h>
 #include <cstring>    // Pour strerror
-#if defined(_WIN32)
-#include <direct.h>   // Pour _mkdir sur Windows
-#endif
 
 Grille::Grille() : lignes(0), colonnes(0) {}
 
@@ -53,18 +50,13 @@ bool Grille::chargerDepuisFichier(const std::string& nomFichier) {
 
 bool Grille::sauvegarderDansFichier(const std::string& dossier, int iteration) const {
     // Créer le dossier si nécessaire
-#if defined(_WIN32)
-    if (_mkdir(dossier.c_str()) != 0 && errno != EEXIST) {
-        std::cerr << "Erreur lors de la création du dossier " << dossier << ": " << strerror(errno) << std::endl;
-        return false;
-    }
-#else
+
     if (mkdir(dossier.c_str(), 0777) != 0 && errno != EEXIST) {
          // std::cerr "caractere error =  Pour print pour une erreur"
         std::cerr << "Erreur lors de la création du dossier " << dossier << ": " << strerror(errno) << std::endl;
         return false;
     }
-#endif
+
 
     // Construire le nom du fichier de sortie
     std::ostringstream nomFichier;
@@ -82,7 +74,10 @@ bool Grille::sauvegarderDansFichier(const std::string& dossier, int iteration) c
     // Écrire l'état des cellules
     for (int i = 0; i < lignes; ++i) {
         for (int j = 0; j < colonnes; ++j) {
-            fichier << (cellules[i][j].estVivante() ? '1' : '0');
+            if (cellules[i][j].estObstacle()) {
+                fichier <<(cellules[i][j].estVivante() ? 'X' : 'O');
+            } else 
+                fichier << (cellules[i][j].estVivante() ? '#' : '.');
             if (j < colonnes - 1) fichier << ' ';
         }
         fichier << '\n';
@@ -93,7 +88,10 @@ bool Grille::sauvegarderDansFichier(const std::string& dossier, int iteration) c
 void Grille::afficherConsole() const {
     for (int y = 0; y < obtenirHauteur(); ++y) {
         for (int x = 0; x < obtenirLargeur(); ++x) {
-            std::cout << (cellules[y][x].estVivante() ? '#' : '.');
+            if (cellules[y][x].estObstacle()) {
+                std::cout <<(cellules[y][x].estVivante() ? 'X' : 'O');
+            } else 
+                std::cout << (cellules[y][x].estVivante() ? '#' : '.');
         }
         std::cout << std::endl;
     }
@@ -157,9 +155,9 @@ void Grille::dessiner(sf::RenderWindow& fenetre) const {
         for (int x = 0; x < colonnes; ++x) {
             rectangle.setPosition(x * tailleCellule, y * tailleCellule);
             if (cellules[y][x].estObstacle()) {
-                rectangle.setFillColor(cellules[y][x].estVivante() ? sf::Color::Red : sf::Color(200, 200, 200)//Couleur Gris clair );
+                rectangle.setFillColor(cellules[y][x].estVivante() ? sf::Color::Red : sf::Color(100, 100, 100));//Couleur Gris clair 
             } else {
-                rectangle.setFillColor(cellules[y][x].estVivante() ? sf::Color::White : sf::Color(0, 0, 0)) //Couleur Noir;
+                rectangle.setFillColor(cellules[y][x].estVivante() ? sf::Color::White : sf::Color(0, 0, 0)); //Couleur Noir
             }
             fenetre.draw(rectangle);
         }
