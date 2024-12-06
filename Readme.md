@@ -1,6 +1,7 @@
+#### https://github.com/maelpitois/POO
 # Jeu de la Vie
 
-#### https://github.com/maelpitois/POO
+
 
 Ce projet implémente le célèbre jeu de la vie de John Conway en C++ avec deux modes :
 
@@ -19,6 +20,10 @@ Ce projet implémente le célèbre jeu de la vie de John Conway en C++ avec deux
 - Gestion des cellules obstacles :
     - Les cellules marquées comme obstacles ne changent jamais d'état.
     - Les obstacles peuvent être vivants ou morts.
+- Architecture MVC :
+    - Modèle (Model) : La classe `Grille` représente la grille du jeu et les règles de l'automate.
+    - Vue (View) : La classe `Vue` permet l'affichage dans la console ou la fenêtre graphique.
+    - Contrôleur (Controller) : La classe `Controleur` permet l'interaction entre la vue et le modèle.
 
 - Deux modes d'exécution :
    - Console : Affiche la grille dans la console, sauvegarde chaque état dans des fichiers.
@@ -62,20 +67,22 @@ Ces fichiers définissent une grille rectangulaire contenant les cellules.
   - Sauvegarder une grille dans un fichier.
   - Mettre à jour les états des cellules.
   - Compter les voisins vivants d'une cellule.
-  - Dessiner la grille dans la console ou dans une fenêtre graphique.
 
-### 3. Jeu.h et Jeu.cpp
-Ces fichiers définissent le jeu de la vie lui-même.
-
-- Propriétés :
-  - Une instance de Grille.
-  - Un délai (en millisecondes) pour le mode graphique.
+### 3. Vue.h et Vue.cpp
+Ces fichiers gèrent l'affichage du jeu, en console ou dans une fenêtre graphique.
 
 - Fonctionnalités :
-  - Mode console : affiche les grilles dans la console et les sauvegarde.
-  - Mode graphique : affiche les grilles dans une fenêtre animée.
+  - afficherConsole : Affiche la grille dans la console.
+  - afficherGraphique : Affiche la grille dans une fenêtre graphique à l'aide de SFML.
 
-### 4. main.cpp
+### 4. Controleur.h et Controleur.cpp
+Ces fichiers orchestrent l'interaction entre le modèle et la vue.
+
+- Fonctionnalités :
+  - lancerModeConsole : Gère l'exécution en mode console.
+  - lancerModeGraphique : Gère l'exécution en mode graphique, avec une gestion du délai entre chaque itération.
+
+### 5. main.cpp
 Ce fichier permet d'éxecuter le programme.
 
 - Permet à l'utilisateur de :
@@ -164,3 +171,108 @@ Ce fichier permet d'éxecuter le programme.
     - Noir : Cellule morte normale.
     - Rouge : Cellule obstacle vivante.
     - Gris foncé : Cellule obstacle morte.
+
+
+# Documentation Technique : Jeu de la Vie
+
+## 1. Structure du projet
+Le projet est structuré en plusieurs fichiers pour organiser clairement les responsabilités :
+
+  - Cellule.h et Cellule.cpp : Définit les cellules du jeu.
+  - Grille.h et Grille.cpp : Définit la grille contenant les cellules.
+  - Controleur.h et Controleur.cpp : Gère l'exécution du jeu en mode console ou graphique.
+  - main.cpp : Point d'entrée du programme, permettant à l'utilisateur de configurer et lancer le jeu.
+
+Chaque fichier a été conçu pour séparer les responsabilités et utiliser au mieux la programmation orientée objet.
+
+## 2. Fichiers et Classes
+
+### 2.1 Cellule.h et Cellule.cpp
+Rôle : Gère les propriétés et comportements individuels des cellules.
+
+- Propriétés :
+  - vivante : Booléen indiquant si la cellule est vivante (true) ou morte (false).
+  - prochainEtat : Booléen stockant l'état calculé pour la prochaine itération.
+  - obstacle : Booléen indiquant si la cellule est un obstacle (true) ou non (false).
+
+#### Méthodes :
+  - Cellule() : Constructeur par défaut, initialise une cellule morte et non-obstacle.
+  - Cellule(bool etatInitial, bool estObstacle = false) : Constructeur avec état initial et possibilité de définir un obstacle.
+  - bool estVivante() const : Retourne si la cellule est vivante.
+  - bool estObstacle() const : Retourne si la cellule est un obstacle.
+  - void definirEtat(bool etat) : Définit l'état actuel de la cellule si elle n'est pas un obstacle.
+  - void definirProchainEtat(bool etat) : Définit l'état futur de la cellule si elle n'est pas un obstacle.
+  - void appliquerProchainEtat() : Applique l'état futur à l'état actuel, sauf pour les obstacles.
+
+#### Interactions :
+Une cellule est utilisée par la classe Grille comme unité de base pour représenter une position dans la grille.
+
+### 2.2 Grille.h et Grille.cpp
+Rôle : Gére la mise à jour des cellules.
+
+#### Propriétés :
+  - lignes : Nombre de lignes dans la grille.
+  - colonnes : Nombre de colonnes dans la grille.
+  - cellules : Matrice 2D de cellules (std::vector<std::vector<Cellule>>).
+
+#### Méthodes :
+  - Grille() : Constructeur par défaut, initialise une grille vide.
+  - bool chargerDepuisFichier(const std::string& nomFichier) :
+      - Charge les dimensions et états des cellules depuis un fichier.
+      - Gère les états obstacles (valeurs 2 et 3).
+  - bool sauvegarderDansFichier(const std::string& dossier, int iteration) const :
+    - Sauvegarde l'état actuel de la grille dans un fichier pour une itération donnée.
+  - bool mettreAJour() :
+    - Calcule les prochains états pour toutes les cellules.
+    - Applique les nouveaux états.
+    - Retourne false si l'automate s'est stabilisé (aucun changement d'état).
+  - int compterVoisinsVivants(int x, int y) const :
+    - Retourne le nombre de voisins vivants autour d'une cellule donnée.
+#### Interactions :
+- La classe Grille est utilisée par Controleur pour manipuler l'état global de la simulation
+
+### 2.3 Vue.h et Vue.cpp 
+Rôle : Représente une grille rectangulaire composée de cellules et gère l'évolution des états
+
+#### Propriétés :
+
+#### Méthodes : 
+ - void afficherGraphique(sf::RenderWindow& fenetre)  :
+    - Dessine la grille dans une fenêtre graphique à l'aide de rectangles colorés.
+- void afficherConsole() const :
+    - Affiche la grille dans la console avec des symboles (#, ., X, O).
+
+### 2.4 Controleur.h et Controleur.cpp
+Rôle : Permet l'exécution du jeu en mode console ou graphique.
+
+#### Propriétés :
+  - grille : Instance de la classe Grille.
+  - delaiMs : Délai entre les itérations en mode graphique (en millisecondes).
+  - fichierEntree : Chemin du fichier contenant la grille initiale.
+
+#### Méthodes :
+  - Controleur(const std::string& fichierEntree, int delaiMs) :
+    - Initialise le jeu en chargeant la grille depuis un fichier.
+  - void executerModeConsole() :
+    - Affiche les grilles successives dans la console.
+    - Sauvegarde chaque état dans des fichiers.
+    - Arrête l'exécution si l'automate se stabilise.
+  - void executerModeGraphique() :
+    - Ouvre une fenêtre graphique pour afficher l'évolution de la grille.
+    - Permet une animation fluide avec un délai contrôlé.
+
+#### Interactions :
+- La classe Jeu utilise la classe Grille pour manipuler les cellules et gère l'interface utilisateur (console ou graphique).
+
+### 2.5 main.cpp
+Rôle : Point d'entrée du programme. Interagit avec l'utilisateur pour configurer et lancer le jeu.
+
+#### Fonctionnement :
+  - Demande à l'utilisateur de fournir le chemin du fichier d'entrée.
+  - Permet de choisir entre le mode console et le mode graphique.
+  - Initialise une instance de Jeu avec les paramètres fournis.
+  - Lance le mode correspondant (console ou graphique).
+
+#### Interactions :
+- Crée une instance de Jeu et délègue le contrôle à cette instance.
+
