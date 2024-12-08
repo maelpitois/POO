@@ -2,8 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <sys/stat.h> // Pour mkdir
-#include <sys/types.h>
+#include <filesystem> 
 #include <cstring>    // Pour strerror
 
 Grille::Grille() : lignes(0), colonnes(0) {}
@@ -49,19 +48,29 @@ bool Grille::chargerDepuisFichier(const std::string& nomFichier) {
 
 
 bool Grille::sauvegarderDansFichier(const std::string& dossier, int iteration) const {
-    // Créer le dossier si nécessaire
+    namespace fs = std::filesystem;
 
-    if (mkdir(dossier.c_str(), 0777) != 0 && errno != EEXIST) {
-         // std::cerr "caractere error =  Pour print pour une erreur"
-        std::cerr << "Erreur lors de la création du dossier " << dossier << ": " << strerror(errno) << std::endl;
+    // Vérifier et créer le dossier si nécessaire
+    try {
+        if (!fs::exists(dossier)) {
+            if (!fs::create_directories(dossier)) {
+                std::cerr << "Erreur : Impossible de créer le dossier " << dossier << std::endl;
+                return false;
+            }
+        }
+    } catch (const fs::filesystem_error& e) {
+        std::cerr << "Erreur lors de la manipulation du système de fichiers : " << e.what() << std::endl;
         return false;
     }
 
+    // Construire le chemin complet du fichier de sortie
+    fs::path cheminFichier = fs::path(dossier) / ("iteration_" + std::to_string(iteration) + ".txt");
 
     // Construire le nom du fichier de sortie
     std::ostringstream nomFichier;
     nomFichier << dossier << "/iteration_" << iteration << ".txt";
 
+    // Ouvrir le fichier en écriture
     std::ofstream fichier(nomFichier.str());
     if (!fichier.is_open()) {
         std::cerr << "Impossible d'ouvrir le fichier pour écriture : " << nomFichier.str() << std::endl;
@@ -85,18 +94,6 @@ bool Grille::sauvegarderDansFichier(const std::string& dossier, int iteration) c
     return true;
 }
 
-void Grille::afficherConsole() const {
-    for (int y = 0; y < obtenirHauteur(); ++y) {
-        for (int x = 0; x < obtenirLargeur(); ++x) {
-            if (cellules[y][x].estObstacle()) {
-                std::cout <<(cellules[y][x].estVivante() ? 'X' : 'O');
-            } else 
-                std::cout << (cellules[y][x].estVivante() ? '#' : '.');
-        }
-        std::cout << std::endl;
-    }
-    std::cout << std::endl;
-}
 
 int Grille::compterVoisinsVivants(int x, int y) const {
     int compteur = 0;
@@ -147,19 +144,4 @@ bool Grille::mettreAJour() {
 }
 
 
-void Grille::dessiner(sf::RenderWindow& fenetre) const {
-    float tailleCellule = 20.0f; // Taille des cellules à l'écran
-    sf::RectangleShape rectangle(sf::Vector2f(tailleCellule, tailleCellule));
 
-    for (int y = 0; y < lignes; ++y) {
-        for (int x = 0; x < colonnes; ++x) {
-            rectangle.setPosition(x * tailleCellule, y * tailleCellule);
-            if (cellules[y][x].estObstacle()) {
-                rectangle.setFillColor(cellules[y][x].estVivante() ? sf::Color::Red : sf::Color(100, 100, 100));//Couleur Gris clair 
-            } else {
-                rectangle.setFillColor(cellules[y][x].estVivante() ? sf::Color::White : sf::Color(0, 0, 0)); //Couleur Noir
-            }
-            fenetre.draw(rectangle);
-        }
-    }
-}
