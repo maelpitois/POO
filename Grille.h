@@ -6,7 +6,7 @@
 #include <SFML/Graphics.hpp>  
 #include "Cellule.h"
 
-// Classe reprÃ©sentant la grille contenant les cellules.
+// Classe représentant la grille contenant les cellules.
 class Grille {
 private:
     int lignes;  // Nombre de lignes dans la grille
